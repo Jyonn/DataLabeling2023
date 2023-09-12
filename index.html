@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
     <title>快速标注工具</title>
     <meta charset="utf-8">
@@ -227,6 +227,9 @@
     }
 
     function displayConversation(index) {
+        if (!dataLoaded) {
+            return;
+        }
         indexInfoElement.textContent = `(${currentIndex + 1}/${conversations.length})`;
 
         let tableContainer = document.getElementById('tableContainer');
