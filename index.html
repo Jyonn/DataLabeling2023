@@ -47,11 +47,16 @@
         }
 
         /* 导出按钮样式 */
-        .export-button {
+        #exportButton {
             float: right;
         }
 
-        .cache-button {
+        #cacheButton {
+            float: right;
+            margin-right: 10px;
+        }
+
+        #toggle {
             float: right;
             margin-right: 10px;
         }
@@ -60,8 +65,9 @@
 <body>
 <!-- 添加一个input元素，用于上传CSV文件 -->
 <input type="file" id="fileInput" accept=".csv">
-<button id="exportButton" class="export-button" onclick="CSV()">导出</button>
-<button id="cacheButton" class="cache-button" onclick="caching()">缓存</button>
+<button id="exportButton" onclick="CSV()">导出</button>
+<button id="cacheButton" onclick="caching()">缓存</button>
+<button id="toggle" onclick="toggle()">当前纵向Tab</button>
 
 <div id="indexInfo"></div>
 <div id="tableContainer" class="conversation-table"></div>
@@ -86,6 +92,8 @@
     let dataLoaded = false;
     let currentIndex = 0;
     let filename = null;
+    let toggleButton = document.getElementById('toggle');
+    let vertical = true;
 
     // 添加option元素，代表不同的选项
     let actionOptions = [
@@ -119,6 +127,16 @@
             }
         });
     });
+
+    function toggle() {
+        vertical = !vertical;
+        if (vertical) {
+            toggleButton.innerText = '当前纵向Tab';
+        } else {
+            toggleButton.innerText = '当前横向Tab';
+        }
+        displayConversation(currentIndex);
+    }
 
     function groupByDiaIdx(data) {
         let conversations = [];
@@ -184,7 +202,9 @@
         });
 
         select.value = initialValue !== null ? initialValue : '';
-        select.tabIndex = tabIndex;
+        if (vertical) {
+            select.tabIndex = tabIndex;
+        }
 
         select.addEventListener('change', function () {
             onChangeCallback(select.value);
