@@ -352,6 +352,7 @@
         let data = JSON.parse(cache);
         conversations = data.conversations;
         currentIndex = data.currentIndex;
+        filename = data.filename;
         dataLoaded = true;
         displayConversation(currentIndex);
     }
@@ -359,7 +360,8 @@
     function caching() {
         localStorage.setItem('cache', JSON.stringify({
             conversations: conversations,
-            currentIndex: currentIndex
+            currentIndex: currentIndex,
+            filename: filename
         }));
     }
 </script>
